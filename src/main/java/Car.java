@@ -31,7 +31,7 @@ public class Car implements Runnable{
     private void throughTunnel()  {
         try {
             Main.tunnel.acquire();
-            System.out.println(number +" has entered the tunnel.");
+            System.out.println(number +" has entered the tunnel. Natural selection!");
             Thread.sleep(random.nextInt(3000)+1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -42,10 +42,13 @@ public class Car implements Runnable{
     }
 
     private void finish() throws BrokenBarrierException, InterruptedException {
-        System.out.println(number +" has finished the ride.");
+        System.out.println(number +" has finished the ride. ");
 
         synchronized (Main.WINNER_MONITOR) {
-            if (Main.winner!=0) Main.winner=(int) number;
+            if (Main.winner!=0) {
+                Main.winner = (int) number;
+                System.out.println("WE HAVE A WINNER!!! This was totally years of dedication and not pure luck.");
+            }
         }
         Main.finishLine.await();
     }
